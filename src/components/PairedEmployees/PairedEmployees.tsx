@@ -63,7 +63,6 @@ const PairedEmployees: React.FC<Props> = ({ data, children }) => {
       projectsDict[field.ProjectID].push(newProjectsDictRecord);
     });
 
-    console.log(pairsDict);
     setLongestPeriodPair(bestPairResult);
   }, [data]);
 

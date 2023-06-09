@@ -4,8 +4,6 @@ const MILLISECONDS_TO_DAYS_CONVERSION_PARAM = 1000 * 60 * 60 * 24;
 
 const getDiffInDays = (date1: Date, date2: Date) => {
   // Here we consider that date1 is before date 2
-  console.log(date1);
-  console.log(date2);
   const diffTime = date2.getTime() - date1.getTime();
   return Math.ceil(diffTime / MILLISECONDS_TO_DAYS_CONVERSION_PARAM);
 };
