@@ -12,7 +12,7 @@ const App = () => {
     useCallback(
       (event) => {
         const fileList = event.target.files;
-        if (fileList) {
+        if (fileList && fileList[0]) {
           onFileParse(fileList);
         }
       },
