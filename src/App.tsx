@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useCallback } from "react";
+import Table from "./components/Table";
+import CSVInput from "./components/CSVInput";
+import PairedEmployees from "./components/PairedEmployees";
+import useCSVData from "./hooks/useCSVData";
+import CSVData from "./types/CSVData";
 
-function App() {
+const App = () => {
+  const { headers, rows, data, onFileParse } = useCSVData<CSVData>();
+
+  const CSVInputChangeHandler: React.ChangeEventHandler<HTMLInputElement> =
+    useCallback(
+      (event) => {
+        const fileList = event.target.files;
+        if (fileList) {
+          onFileParse(fileList);
+        }
+      },
+      [onFileParse]
+    );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <CSVInput onChange={CSVInputChangeHandler} />
+      {headers && rows ? <Table headers={headers} rows={rows} /> : null}
+      {data ? (
+        <PairedEmployees data={data}>
+          {(props) => (
+            <div>{`${props.employee1Id} and ${props.employee2Id} is the longest period pair ${props.periodInDays} day(s).`}</div>
+          )}
+        </PairedEmployees>
+      ) : null}
     </div>
   );
-}
+};
 
 export default App;
